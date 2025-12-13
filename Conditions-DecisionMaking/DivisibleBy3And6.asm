@@ -1,0 +1,46 @@
+.MODEL SMALL
+.STACK 100H
+
+.DATA   
+A DB "DIVISIBLE BY BOTH 3 AND 6 $" 
+B DB "NOT DIVISIBLE BY BOTH 3 AND 6 $"   
+
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX  
+
+    MOV AX, 18
+    MOV CX, AX
+
+    MOV BL, 3
+    DIV BL
+    CMP AH, 0
+    JE CHECK
+    JMP NOTDIV
+
+CHECK:
+    MOV AX, CX
+    MOV BL, 6
+    DIV BL
+    CMP AH, 0
+    JE DIV
+    JMP NOTDIV
+
+DIV:
+    LEA DX, A
+    MOV AH, 9
+    INT 21H
+    JMP EXIT
+
+NOTDIV:
+    LEA DX, B
+    MOV AH, 9
+    INT 21H
+
+EXIT:
+    MOV AH, 4CH
+    INT 21H
+
+MAIN ENDP
+END MAIN
