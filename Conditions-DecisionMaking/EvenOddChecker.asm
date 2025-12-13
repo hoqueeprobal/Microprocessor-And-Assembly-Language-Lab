@@ -1,0 +1,41 @@
+.MODEL SMALL
+.STACK 100H
+
+.DATA    
+A DB "THIS IS AN ODD NUMBER $" 
+B DB "THIS IS AN EVEN NUMBER $"
+
+.CODE
+MAIN PROC         
+    MOV AX, @DATA
+    MOV DS, AX  
+
+    MOV AH, 1
+    INT 21H
+
+    MOV BL, AL
+    SUB BL, 30H
+
+    MOV AL, BL
+    MOV BL, 2
+    DIV BL
+
+    CMP AH, 0
+    JE EVEN
+
+    LEA DX, A
+    MOV AH, 9
+    INT 21H
+    JMP EXIT
+
+EVEN:
+    LEA DX, B
+    MOV AH, 9
+    INT 21H
+
+EXIT:
+    MOV AH, 4Ch
+    INT 21h
+
+MAIN ENDP
+END MAIN
