@@ -1,0 +1,28 @@
+.MODEL SMALL
+.STACK 100H
+
+.DATA
+CHECK DB 62H
+
+.CODE
+MAIN PROC
+    MOV AX, @DATA
+    MOV DS, AX
+
+    MOV AL, CHECK
+
+    CMP AL, 61H
+    JL EXIT
+    CMP AL, 7AH
+    JG EXIT
+
+    MOV DL, AL
+    MOV AH, 2
+    INT 21H
+
+EXIT:
+    MOV AH, 4CH
+    INT 21H
+
+MAIN ENDP
+END MAIN
