@@ -1,0 +1,35 @@
+.MODEL SMALL
+.STACK 100H
+
+.DATA
+
+.CODE
+MAIN PROC
+
+    MOV AX, @DATA
+    MOV DS, AX
+
+    MOV CX, 9
+    MOV BL, 1
+
+CHECK:
+    MOV AX, 9
+    DIV BL
+
+    CMP AH, 0
+    JNE SKIP
+
+    MOV DL, BL
+    ADD DL, 48
+    MOV AH, 2
+    INT 21H
+
+SKIP:
+    INC BL
+    LOOP CHECK
+
+    MOV AH, 4CH
+    INT 21H
+
+MAIN ENDP
+END MAIN
