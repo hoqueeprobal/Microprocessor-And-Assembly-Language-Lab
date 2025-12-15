@@ -1,0 +1,32 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+A DB "DHAKA"
+
+.CODE
+MAIN PROC
+    MOV AX, @DATA
+    MOV DS, AX
+
+    MOV CX, 5
+    MOV SI, 0
+
+CHECK:
+    MOV AL, A[SI]
+    INC SI
+    PUSH AX
+    LOOP CHECK
+
+    MOV CX, 5
+
+DISPLAY:
+    POP AX
+    MOV DL, AL
+    MOV AH, 2
+    INT 21H
+    LOOP DISPLAY
+
+    MOV AH, 4CH
+    INT 21H
+MAIN ENDP
+END MAIN
