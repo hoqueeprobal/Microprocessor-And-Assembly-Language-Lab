@@ -1,0 +1,24 @@
+.MODEL SMALL
+.STACK 100H
+
+.DATA
+
+.CODE
+MAIN PROC
+    MOV AX, @DATA
+    MOV DS, AX
+
+    MOV CX, 9
+    MOV DL, 39H
+
+PRINT:
+    MOV AH, 2
+    INT 21H
+    DEC DL
+    LOOP PRINT
+
+    MOV AH, 4CH
+    INT 21H  
+    
+MAIN ENDP
+END MAIN
