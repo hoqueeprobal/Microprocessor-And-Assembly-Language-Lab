@@ -1,0 +1,27 @@
+.MODEL SMALL
+.STACK 100H
+
+.DATA
+A DB 1,2,3,4,5,6,7,8,9
+
+.CODE
+MAIN PROC
+    MOV AX, @DATA
+    MOV DS, AX
+
+    MOV CX, 9
+    MOV SI, 0
+    MOV AH, 2
+
+START:
+    MOV DL, A[SI]
+    ADD DL, 30H
+    INT 21H
+
+    ADD SI, 1
+    LOOP START
+
+    MOV AH, 4CH
+    INT 21H
+MAIN ENDP
+END MAIN
