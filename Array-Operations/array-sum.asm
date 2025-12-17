@@ -1,0 +1,34 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+A DB "1","2","3","2","1"
+SUM DB ?
+
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+
+    MOV SI,0
+    MOV CX,5
+    MOV AL,0
+
+LOOPS:
+    MOV BL,A[SI]
+    SUB BL,30H
+    ADD AL,BL
+    INC SI
+    LOOP LOOPS
+
+    ADD AL,30H
+    MOV SUM,AL
+
+    MOV DL,SUM
+    MOV AH,2
+    INT 21H
+
+    MOV AH,4CH
+    INT 21H   
+    
+MAIN ENDP
+END MAIN
