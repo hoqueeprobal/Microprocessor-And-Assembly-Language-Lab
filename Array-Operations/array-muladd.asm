@@ -1,0 +1,52 @@
+.MODEL SMALL
+.STACK 100H
+
+.DATA
+A DB "2","2","4","2"
+B DB "2","3","2","3"
+C DB "1","2","1","3"
+D DB 4 DUP(?)
+
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+
+    MOV SI,0
+    MOV CX,4
+
+CALCULATION:
+    MOV AL,A[SI]
+    SUB AL,30H
+
+    MOV BL,B[SI]
+    SUB BL,30H
+
+    MUL BL         
+
+    MOV BL,C[SI]
+    SUB BL,30H
+
+    ADD AL,BL      
+
+    ADD AL,30H
+    MOV D[SI],AL
+
+    INC SI
+    LOOP CALCULATION
+
+    MOV SI,0
+    MOV CX,4
+
+PRINT:
+    MOV DL,D[SI]
+    MOV AH,2
+    INT 21H
+    INC SI
+    LOOP PRINT
+
+    MOV AH,4CH
+    INT 21H
+
+MAIN ENDP
+END MAIN
