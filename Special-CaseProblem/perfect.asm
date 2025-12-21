@@ -1,0 +1,54 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+NUM DB 36H
+SUM DB 0
+A DB "Perfect$"
+B DB "Not perfect$"
+
+.CODE
+MAIN PROC
+    MOV AX, @DATA
+    MOV DS, AX
+
+    MOV AL, NUM
+    SUB AL, 30H
+    MOV BL, AL
+    MOV SUM, 0
+
+    MOV CL, 1
+
+DIV:
+    MOV AL, BL
+    MOV AH, 0
+    DIV CL
+    CMP AH, 0
+    JNE NEXT
+    ADD SUM, CL
+
+NEXT:
+    INC CL
+    CMP CL, BL
+    JL DIV
+
+    MOV AL, SUM
+    CMP AL, BL
+    JE PERFECT
+
+NOT_PERFECT:
+    LEA DX, B
+    MOV AH, 9
+    INT 21H
+    JMP EXIT
+
+PERFECT:
+    LEA DX, A
+    MOV AH, 9
+    INT 21H
+
+EXIT:
+    MOV AH, 4CH
+    INT 21H
+MAIN ENDP
+END MAIN
+ 
